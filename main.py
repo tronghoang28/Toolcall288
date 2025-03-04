@@ -3335,7 +3335,12 @@ functions = [
     aio, fpt, unicar, lozido, pingpush, ting,
     kanow, butlsms, butlzl, ilokafood, vieclam24h,
     sobanhangzl, sobanhang, sfin, sapo,
-    truedoc, upos, ghephang, hoatoc247, gotp
+    truedoc, upos, ghephang, hoatoc247, gotp,
+    # Thêm một số API mới vào đây:
+    meta, popeys, mykiot, chongluadao, dkvt,
+    vietlott, onecredit, dongplus, oncredit, vayvnd,
+    robocash, yomoney, lovemoney, viettelpay, vayno,
+    mobifone, caydenthan, findo, tienoi, senmo
 ]
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
