@@ -10,6 +10,22 @@ init(autoreset=True)
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+proxies_list = [
+    'http://proxy1.example.com:8080',
+    'http://proxy2.example.com:8080',
+    'http://proxy3.example.com:8080',
+    # Add more proxies as needed
+]
+
+def get_random_proxy():
+    return {'http': random.choice(proxies_list), 'https': random.choice(proxies_list)} if proxies_list else None
+
+http = urllib3.PoolManager(
+    cert_reqs='CERT_REQUIRED',
+    ca_certs='/path/to/your/certificate-authority-bundle-file',
+    proxies=get_random_proxy()
+)
+
 http = urllib3.PoolManager(
     cert_reqs='CERT_REQUIRED',
     ca_certs='/path/to/your/certificate-authority-bundle-file'
@@ -44,6 +60,7 @@ def generate_random_email(domain='example.com'):
 random_email = generate_random_email()
 
 def tv360():
+    proxy = get_random_proxy()
     cookies = {
         'img-ext': 'avif',
         'NEXT_LOCALE': 'vi',
@@ -83,7 +100,7 @@ def tv360():
     }
 
     try:
-        response = requests.post('https://tv360.vn/public/v1/auth/get-otp-login', cookies=cookies, headers=headers, json=json_data)
+        response = requests.post('https://tv360.vn/public/v1/auth/get-otp-login', cookies=cookies, headers=headers, json=json_data, proxies=proxy)
         response.raise_for_status()  # Raise an exception for HTTP errors
         print("TV360 | TRẠNG THÁI : THÀNH CÔNG")
     except requests.exceptions.RequestException:
