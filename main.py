@@ -3355,8 +3355,24 @@ functions = [
     truedoc, upos, ghephang, hoatoc247, gotp
 ]
 
+print("Bắt đầu gửi OTP...")
+success = 0
+failed = 0
+
 with concurrent.futures.ThreadPoolExecutor() as executor:
     for i in range(count):
+        print(f"\nLần {i+1}/{count}")
+        futures = []
         for func in functions:
-            executor.submit(func)
-            time.sleep(0)
+            future = executor.submit(func)
+            futures.append(future)
+            time.sleep(0.1) # Delay để tránh spam quá nhanh
+            
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                future.result()
+                success += 1
+            except Exception:
+                failed += 1
+                
+print(f"\nKết quả: Thành công: {success} | Thất bại: {failed}")
