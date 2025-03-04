@@ -3347,31 +3347,6 @@ functions = [
     vinfastescooter, taskal, star_t, nhadatvui,
     mocha35, thuongdo, unica, monkeyjunior,
     babilala, edupia, vkids, mytv, ahamove,
-
-
-def test_apis():
-    print("Testing APIs for phone number:", sdt)
-    
-    # Test a few services
-    print("\nTesting TV360...")
-    tv360()
-    
-    time.sleep(1) # Delay between calls
-    
-    print("\nTesting Tiki...")
-    tiki()
-    
-    time.sleep(1)
-    
-    print("\nTesting Momo...")
-    momo()
-
-# Test the APIs
-if __name__ == "__main__":
-    sdt = input("Nhập số điện thoại: ")
-    test_apis()
-
-
     cathaylife, prepedu, bigm, atmnha, hvb, zodi,
     dynaminds, gicula, dalatbds, mocha2, jupviec, guvi,
     aio, fpt, unicar, lozido, pingpush, ting,
