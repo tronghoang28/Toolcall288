@@ -281,7 +281,28 @@ def foodhubzl(): # check ap
         'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Opera";v="112"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Windows"',
+        try:
+        response = requests.post(
+            f'https://apigami.viettel.vn/mvt-api/myviettel.php/getOTPLoginCommon?lang=vi&phone={sdt}&actionCode=myviettel:%2F%2Flogin_mobile&typeCode=DI_DONG&type=otp_login',
+            headers=headers,
+        )
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        print("MYVIETTEL | TRẠNG THÁI : THÀNH CÔNG")
+    except requests.exceptions.RequestException:
+        print("MYVIETTEL | TRẠNG THÁI : " + Fore.RED + "THẤT BẠI" + Style.RESET_ALL)
+
+def fptshop():
+    headers = {
+        'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Opera";v="112"',
+        'sec-ch-ua-mobile': '?0',
+        'apptenantid': 'E6770008-4AEA-4EE6-AEDE-691FD22F5C14',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 OPR/112.0.0.0',
+        'Content-Type': 'application/json',
+        'Referer': 'https://fptshop.com.vn/',
+        'order-channel': '1',
+        'sec-ch-ua-platform': '"Windows"',
     }
+
 
     data = {
         'access_token': '73f53f54d63b6caa9fb7b90f0007b72a52be1849b00a35d599fb002c22701563',
@@ -340,6 +361,37 @@ def vttelecom():
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'cross-site',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 OPR/112.0.0.0',
+    }
+    
+    json_data = {
+        'phone_no': sdt_chuyen_doi,
+        'uuid': '6b83df66-d9ad-4ef0-86d9-a235c5e83aa7',
+        'is_from_food': True,
+        'is_forgot_pin': False,
+        'locale': 'vi',
+        'app_version': '11261',
+        'version': '1.1.261',
+        'device_type': 3,
+        'operator_token': '0b28e008bc323838f5ec84f718ef11e6',
+        'customer_package_name': 'xyz.be.food',
+        'device_token': '2a5886db48531ea9feb406f8801a3edd',
+        'ad_id': '',
+        'screen_width': 360,
+        'screen_height': 640,
+        'client_info': {
+            'locale': 'vi',
+            'app_version': '11261',
+            'version': '1.1.261',
+            'device_type': 3,
+            'operator_token': '0b28e008bc323838f5ec84f718ef11e6',
+            'customer_package_name': 'xyz.be.food',
+            'device_token': '2a5886db48531ea9feb406f8801a3edd',
+            'ad_id': '',
+            'screen_width': 360,
+            'screen_height': 640,
+        },
+        'latitude': 10.77253621500006,
+        'longitude': 106.69798153800008,
     }
 
     try:
