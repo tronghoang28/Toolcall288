@@ -270,7 +270,6 @@ def foodhubzl(): # check ap
         'Accept-Language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
         'Connection': 'keep-alive',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        # 'Cookie': 'tick_session=f0s3e78s49netpa8583ggjedo5fiabkj',
         'Origin': 'https://account.ab-id.net',
         'Referer': 'https://account.ab-id.net/auth/login?token=73f53f54d63b6caa9fb7b90f0007b72a52be1849b00a35d599fb002c22701563&destination=https://www.foodhub.vn',
         'Sec-Fetch-Dest': 'empty',
@@ -281,15 +280,25 @@ def foodhubzl(): # check ap
         'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Opera";v="112"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Windows"',
-        try:
-        response = requests.post(
-            f'https://apigami.viettel.vn/mvt-api/myviettel.php/getOTPLoginCommon?lang=vi&phone={sdt}&actionCode=myviettel:%2F%2Flogin_mobile&typeCode=DI_DONG&type=otp_login',
-            headers=headers,
-        )
+    }
+
+    data = {
+        'access_token': '73f53f54d63b6caa9fb7b90f0007b72a52be1849b00a35d599fb002c22701563',
+        'destination': 'https://www.foodhub.vn',
+        'site_token': '',
+        'phone_number': sdt,
+        'remember_account': '1',
+        'type': 'zalootp',
+        'country': '+84',
+        'country_code': 'VN',
+    }
+
+    try:
+        response = requests.post('https://account.ab-id.net/auth/get_form_phone_code', cookies=cookies, headers=headers, data=data)
         response.raise_for_status()  # Raise an exception for HTTP errors
-        print("MYVIETTEL | TRẠNG THÁI : THÀNH CÔNG")
+        print("FOODHUBZL ABAHA | TRẠNG THÁI : THÀNH CÔNG")
     except requests.exceptions.RequestException:
-        print("MYVIETTEL | TRẠNG THÁI : " + Fore.RED + "THẤT BẠI" + Style.RESET_ALL)
+        print("FOODHUBZL ABAHA | TRẠNG THÁI : " + Fore.RED + "THẤT BẠI" + Style.RESET_ALL)
 
 def fptshop():
     headers = {
